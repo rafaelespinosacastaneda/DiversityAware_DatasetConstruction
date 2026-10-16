@@ -151,7 +151,7 @@ To select a policy, uncomment its identifier in `GROWING_CRITERIA` in `run_al_th
 
 Random sampling uses `grow_random` with `target=all`.
 
-The repository also provides the following additional variants:
+The repository also provides the following additional variants not included in the main text of the paper but included in the Supplementary Information:
 
 | Additional policy | Two targeted outcomes | Three targeted outcomes |
 |---|---|---|
