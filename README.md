@@ -10,7 +10,7 @@ The repository is organized into three main folders:
 
 The `ActiveLearningDFT` folder contains the code used for the DFT dataset construction experiments. These experiments use JARVIS18, JARVIS22, MP18, and MP21 as candidate pools. This folder also includes the Zenodo link to the corresponding DFT dataset construction results.
 
-The `ActiveLearningExperimental` folder contains the code used for the experimental dataset construction experiments. These experiments use the sysTEm dataset as the candidate pool. This folder also includes the Zenodo link to the corresponding experimental dataset construction results.
+The `ActiveLearningExperimental` folder contains the code used for the experimental dataset construction experiments. These experiments use the sysTEm dataset as the candidate pool. 
 
 The `PlottingCodes` folder contains the codes used to generate all plots in the paper.
 
