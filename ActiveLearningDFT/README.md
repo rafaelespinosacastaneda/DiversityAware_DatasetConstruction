@@ -1,19 +1,19 @@
 ## Acquisition policies
 
-The repository includes the DFT acquisition policies listed below. The tables map the names used in the paper to their corresponding code identifiers.
+The repository includes the DFT acquisition policies listed below. The tables map the names used in the paper to the command-line identifiers accepted by `run_al.py`.
 
-To select a policy, uncomment its identifier in `GROWING_CRITERIA` in `run_al.bash`. You can enable multiple policies to run them sequentially.
+Select the policies to run by editing `GROWING_CRITERIA` in `run_al.bash`. All 10 policies are enabled in the provided script. Comment out any policies you do not want to run. Selected policies run sequentially.
 
-### Policy names and code identifiers
+### Policy names and command-line identifiers
 
 | Policy name in the paper | One targeted outcome | Two targeted outcomes |
 |---|---|---|
-| QBC | `grow_QBC` | `grow2QBC` |
+| QBC | `QBC` | `grow2QBC` |
 | HV + k-medoids | `grow_disagreementHV_topM_kmedoids_OneTarget` | `grow_disagreementHV_topM_kmedoids_TwoTargets` |
 | TS-Dis. | `grow_TS_QBC_no_diversity_OneTarget` | `grow_TS_QBC_no_diversity_TwoTargets` |
 | DPP TS-Dis. | `grow_DPP_TS_QBC_OneTarget` | `grow_DPP_TS_QBC_TwoTargets` |
 
-Random sampling uses `grow_random` with `target=all`.
+Random sampling uses the command-line identifier `random` with `target=all`.
 
 The repository also provides the following variant, included in the Supplementary Information:
 
@@ -30,11 +30,12 @@ The repository also provides the following variant, included in the Supplementar
 - **Dis.** denotes model disagreement.
 - Historical code identifiers retain `QBC` in the TS-Dis. and DPP TS-Dis. names.
 - `OneTarget` and `TwoTargets` indicate the number of targeted material properties.
-- `grow2QBC` is the code identifier for QBC targeting two outcomes.
+- `grow2QBC` is the command-line identifier for QBC targeting two outcomes.
+- Command-line identifiers must match the dispatch conditions in `run_al.py`. Single-target QBC uses `QBC`, which calls the Python function `grow_QBC`. Random sampling uses `random`, which calls `grow_random`.
 
 ### Available datasets and targets
 
-The available datasets are `jarvis18`, `jarvis22`, `mp18`, and `mp21`. Configure the datasets to run in `run_al.bash`:
+The available datasets are `jarvis18`, `jarvis22`, `mp18`, and `mp21`. The provided script selects `jarvis18`. To run all four datasets, set:
 
 ```bash
 DATASETS=(jarvis18 jarvis22 mp18 mp21)
@@ -68,13 +69,32 @@ Activate the Python environment containing the required dependencies, then run t
 bash run_al.bash
 ```
 
-The demo enables `grow_QBC` by default. Edit `GROWING_CRITERIA` to select other policies, and edit `DATASETS`, `RANDOM_SEEDS`, and the target arrays to configure the runs.
+The provided script enables all 10 policies:
 
-Each selected policy runs its full acquisition campaign. Results are saved under:
+```bash
+GROWING_CRITERIA=(
+    QBC
+    grow_disagreementHV_topM_kmedoids_OneTarget
+    grow_DPP_TS_QBC_OneTarget
+    grow_TS_QBC_no_diversity_OneTarget
+    grow2QBC
+    grow_disagreementHV_topM_kmedoids_TwoTargets
+    grow_disagreementHV_no_diversity_TwoTargets
+    grow_DPP_TS_QBC_TwoTargets
+    grow_TS_QBC_no_diversity_TwoTargets
+    random
+)
+```
+
+Edit `GROWING_CRITERIA` to select policies, and edit `DATASETS`, `RANDOM_SEEDS`, and the target arrays to configure the runs.
+
+Each selected policy runs its full acquisition campaign without a time limit. Results are saved under:
 
 ```text
 al/<policy>/<dataset>/<target>/<seed>/
 ```
+
+Here, `<policy>` is the command-line identifier, such as `QBC`, `grow2QBC`, or `random`.
 
 You can also select a policy directly through the Python command-line interface. For example:
 
@@ -89,7 +109,7 @@ python run_al.py \
 
 This example runs DPP TS-Dis. targeting band gap and bulk modulus in JARVIS18.
 
-To run all policies listed above, uncomment every policy in `GROWING_CRITERIA` in `run_al.bash`. To use all target combinations, set:
+To use all target combinations, set:
 
 ```bash
 TARGETS_1=(bandgap e_form bulk_modulus)
