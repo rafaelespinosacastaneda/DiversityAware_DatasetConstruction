@@ -52,20 +52,20 @@ The `systemDataCuration` folder contains the code and raw data used to curate an
 
 ### `DataCuration_sysTEmDataset.ipynb`
 
-This notebook featurizes the chemical compositions in `sysTEm_dataset.xlsx` and curates the dataset.
+This notebook featurizes the chemical compositions in `sysTEm_dataset.xlsx`, curates the dataset and drops correlated features.
 
 Before running the notebook, make sure that:
 
 1. The sysTEm dataset has been downloaded.
 2. The local file path to `sysTEm_dataset.xlsx` is correctly specified in the notebook.
 
-The notebook outputs a curated CSV file named:
+The notebook outputs two CSV files named:
 
 ```text
+CLEANED_DATA.csv
 CLEANED_DATA_AND_FILTERED.csv
 ```
-
-This file is used as the candidate pool for the active-learning dataset construction experiments.
+The first file is the data curated version (no dropping of correlated features) of the sysTEm pool. The second is the file used as the candidate pool for the active-learning dataset construction experiments.
 
 ### `sysTEm_dataset.xlsx`
 
