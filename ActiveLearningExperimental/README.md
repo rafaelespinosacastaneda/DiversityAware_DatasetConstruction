@@ -133,6 +133,48 @@ The repository also provides the following additional variants not included in t
 - `OneTarget`, `TwoTargets`, and `ThreeTargets` indicate the number of targeted material properties.
 - `QBC_ONLY` identifies the NSGA-II variants that optimize disagreement without an additional diversity objective.
 
+## Experimental target identifiers
+
+The experimental thermoelectric dataset contains four material properties: electrical conductivity, thermal conductivity, Seebeck coefficient, and thermoelectric figure of merit (zT). The following identifiers specify which properties are targeted during acquisition.
+
+| Target group | Code identifier | Material properties |
+|---|---|---|
+| One outcome | `electric_cond` | Electrical conductivity |
+| One outcome | `seebeck_coef` | Seebeck coefficient |
+| One outcome | `zT` | Thermoelectric figure of merit (zT) |
+| One outcome | `thermal_cond` | Thermal conductivity |
+| Two outcomes | `el_seeb` | Electrical conductivity and Seebeck coefficient |
+| Two outcomes | `el_zT` | Electrical conductivity and zT |
+| Two outcomes | `el_ThC` | Electrical conductivity and thermal conductivity |
+| Two outcomes | `seeb_zT` | Seebeck coefficient and zT |
+| Two outcomes | `seeb_ThC` | Seebeck coefficient and thermal conductivity |
+| Two outcomes | `zT_ThC` | zT and thermal conductivity |
+| Three outcomes | `el_seeb_zT` | Electrical conductivity, Seebeck coefficient, and zT |
+| Three outcomes | `el_seeb_ThC` | Electrical conductivity, Seebeck coefficient, and thermal conductivity |
+| Three outcomes | `el_zT_ThC` | Electrical conductivity, zT, and thermal conductivity |
+| Three outcomes | `seeb_zT_ThC` | Seebeck coefficient, zT, and thermal conductivity |
+| All outcomes | `all` | All four properties; used for random sampling |
+
+### Target configuration
+
+Edit the target arrays in `run_al_thermo.bash` to select one or more target combinations in each group. For example:
+
+    TARGETS_1=(electric_cond)
+    TARGETS_2=(el_seeb)
+    TARGETS_3=(el_seeb_zT)
+    TARGETS_ALL=(all)
+
+To enable every available target combination:
+
+    TARGETS_1=(electric_cond seebeck_coef zT thermal_cond)
+    TARGETS_2=(el_seeb el_zT el_ThC seeb_zT seeb_ThC zT_ThC)
+    TARGETS_3=(el_seeb_zT el_seeb_ThC el_zT_ThC seeb_zT_ThC)
+    TARGETS_ALL=(all)
+
+Each selected acquisition policy uses its corresponding target group. Properties excluded from acquisition are evaluated as untargeted outcomes. The `all` identifier is used for the random-sampling baseline.
+
+**Note:** Target identifiers are case-sensitive. Preserve `zT` and `ThC` exactly as shown.
+
 ### Running the demo
 
 Activate the Python environment containing the required dependencies, then run the following command from the directory containing `run_all_thermo.py`:
