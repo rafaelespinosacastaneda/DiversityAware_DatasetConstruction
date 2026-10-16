@@ -85,7 +85,7 @@ Dataset DOI:
 
 ---
 
-## 2. `ActiveLearningDatasetConstruction-DEMO`
+## 2. `ActiveLearningDatasetConstruction`
 
 The `ActiveLearningDatasetConstruction` folder contains the scripts used to run the active-learning dataset construction experiments.
 
