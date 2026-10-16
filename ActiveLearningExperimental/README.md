@@ -135,7 +135,7 @@ The repository also provides the following additional variants not included in t
 
 ## Experimental target identifiers
 
-The experimental thermoelectric dataset contains four material properties: electrical conductivity, thermal conductivity, Seebeck coefficient, and thermoelectric figure of merit (zT). The following identifiers specify which properties are targeted during acquisition.
+The curated experimental thermoelectric dataset contains four material properties: electrical conductivity, thermal conductivity, Seebeck coefficient, and thermoelectric figure of merit (zT). The following identifiers specify which properties are targeted during acquisition.
 
 | Target group | Code identifier | Material properties |
 |---|---|---|
@@ -164,16 +164,9 @@ Edit the target arrays in `run_al_thermo.bash` to select one or more target comb
     TARGETS_3=(el_seeb_zT)
     TARGETS_ALL=(all)
 
-To enable every available target combination:
-
-    TARGETS_1=(electric_cond seebeck_coef zT thermal_cond)
-    TARGETS_2=(el_seeb el_zT el_ThC seeb_zT seeb_ThC zT_ThC)
-    TARGETS_3=(el_seeb_zT el_seeb_ThC el_zT_ThC seeb_zT_ThC)
-    TARGETS_ALL=(all)
 
 Each selected acquisition policy uses its corresponding target group. Properties excluded from acquisition are evaluated as untargeted outcomes. The `all` identifier is used for the random-sampling baseline.
 
-**Note:** Target identifiers are case-sensitive. Preserve `zT` and `ThC` exactly as shown.
 
 ### Running the demo
 
