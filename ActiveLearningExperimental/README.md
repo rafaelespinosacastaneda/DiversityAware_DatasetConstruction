@@ -141,31 +141,65 @@ Inside the `al` folder, results are organized into subfolders according to the d
 
 This Python module contains the different dataset construction policies used in the active-learning experiments.
 
-These policies include:
+The repository includes the acquisition policies listed below. The tables map the names used in the paper to their corresponding code identifiers.
 
-- random sampling
-- query-by-committee strategies
-- NSGA-II-based multi-objective strategies
-- diversity-aware strategies
+To select a policy, uncomment its identifier in `GROWING_CRITERIA` in `run_al_thermo.bash`. You can enable multiple policies to run them sequentially.
 
----
+### Policy names and code identifiers
+
+| Policy name in the paper | One targeted outcome | Two targeted outcomes | Three targeted outcomes |
+|---|---|---|---|
+| QBC | `grow_QBC` | `grow_2QBC` | `grow_3QBC` |
+| HV + k-medoids | `grow_disagreementHV_topM_kmedoids_OneTarget` | `grow_disagreementHV_topM_kmedoids_TwoTargets` | `grow_disagreementHV_topM_kmedoids_ThreeTargets` |
+| TS-Dis. | `grow_TS_QBC_no_diversity_OneTarget` | `grow_TS_QBC_no_diversity_TwoTargets` | `grow_TS_QBC_no_diversity_ThreeTargets` |
+| DPP TS-Dis. | `grow_DPP_TS_QBC_OneTarget` | `grow_DPP_TS_QBC_TwoTargets` | `grow_DPP_TS_QBC_ThreeTargets` |
+| NSGA-II Dis. | — | `grow_EA_2Obj_TwoTargets_QBC_ONLY` | `grow_EA_3Obj_ThreeTargets_QBC_ONLY` |
+| NSGA-II Dis. + diversity | `grow_EA_DeltaDiversity` | `grow_EA_3Obj_TwoTargets` | `grow_EA_4Obj_ThreeTargets` |
+
+Random sampling uses `grow_random` with `target=all`.
+
+The repository also provides the following additional variants:
+
+| Additional policy | Two targeted outcomes | Three targeted outcomes |
+|---|---|---|
+| HV without diversity | `grow_disagreementHV_no_diversity_TwoTargets` | `grow_disagreementHV_no_diversity_ThreeTargets` |
+
+### Naming convention
+
+- **QBC** stands for query by committee.
+- **HV** stands for hypervolume.
+- **TS** stands for Thompson sampling.
+- **DPP** stands for determinantal point process.
+- **Dis.** denotes model disagreement.
+- **NSGA-II** stands for Non-dominated Sorting Genetic Algorithm II.
+- Historical code identifiers retain `QBC` in the TS-Dis. and DPP TS-Dis. names.
+- For NSGA-II policies, `2Obj`, `3Obj`, and `4Obj` indicate the number of optimization objectives, including the diversity objective when present.
+- `OneTarget`, `TwoTargets`, and `ThreeTargets` indicate the number of targeted material properties.
+- `QBC_ONLY` identifies the NSGA-II variants that optimize disagreement without an additional diversity objective.
+
+### Running the demo
+
+Activate the Python environment containing the required dependencies, then run the following command from the directory containing `run_all_thermo.py`:
+
+    bash run_al_thermo.bash
+
+The demo enables `grow_QBC` by default. Edit `GROWING_CRITERIA` to select other policies, and edit `RANDOM_SEEDS` and the target arrays to configure the runs.
+
+Each selected policy runs its full acquisition campaign. Results are saved under:
+
+    al/<policy>/<dataset>/<target>/<seed>/
+
+You can also select a policy directly through the Python command-line interface. For example:
+
+    python run_all_thermo.py \
+        --growingCriteria grow_EA_3Obj_TwoTargets \
+        --dataset ThermoEl \
+        --target el_seeb \
+        --outputDir al/grow_EA_3Obj_TwoTargets/ThermoEl/el_seeb/0 \
+        --randomSeed 0
+
+This example runs NSGA-II Dis. + diversity targeting electrical conductivity and the Seebeck coefficient.
+
 
 To run all the policies modify the `run_al_thermo.bash` file to include every policy.
 
-## 3. `ResultsAnalysis`
-
-The `ResultsAnalysis` folder contains the notebooks used to analyze the active-learning results.
-
-### `ImprovementThermoElectricData.ipynb`
-### `generalized_Plotting.ipynb`
-
-This notebook plots the improvement of each dataset construction policy relative to random sampling. These notebook plots the improvement of each dataset construction policy relative to random sampling. Also, data coverage and RMSE plots can be made for each of the different policies with generalized plotting code.
-
-
-Before running the notebook, make sure to update the `ROOT` path in the code so that it points to the `al` folder containing the dataset construction results. 
-For example:
-
-```python
-ROOT = "path/to/ExperimentalDatasetConstruction/ActiveLearningDatasetConstruction/al"
-```
-The results to run the analysis can be found in [Zenodo experimental ](https://zenodo.org/records/20088580?token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjNlYzk4YjIzLThiMDItNGU2OS05M2M1LWQ0YmQ0MTVhMzVhOSIsImRhdGEiOnt9LCJyYW5kb20iOiJmMzZhYTM2NmM0N2IzZTc2OGVlNTg0ZWExZWZiMDZhNSJ9.NA_XtJR2OTbpnNQAVUT9OFIBSURP8DtZ3Q_-b7nAsDOVprPuIxMg99WMfvawjdAfMY00IGhSnWXGtZ-jB7KbhA)
