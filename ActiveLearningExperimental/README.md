@@ -39,9 +39,6 @@ source test/Scripts/activate
 
 ---
 
-
-# ExperimentalDatasetConstruction
-
 This folder contains two subfolders:
 
 - `systemDataCuration`
