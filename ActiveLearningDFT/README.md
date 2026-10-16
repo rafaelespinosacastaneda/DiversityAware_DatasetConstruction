@@ -2,7 +2,7 @@
 
 The repository includes the DFT acquisition policies listed below. The tables map the names used in the paper to the command-line identifiers accepted by `run_al.py`.
 
-Select the policies to run by editing `GROWING_CRITERIA` in `run_al.bash`. All 10 policies are enabled in the provided script. Comment out any policies you do not want to run. Selected policies run sequentially.
+Select the policies to run by editing `GROWING_CRITERIA` in `run_al.bash`. All 13 policies are enabled in the provided script. Comment out any policies you do not want to run. Selected policies run sequentially.
 
 ### Policy names and command-line identifiers
 
@@ -12,6 +12,8 @@ Select the policies to run by editing `GROWING_CRITERIA` in `run_al.bash`. All 1
 | HV + k-medoids | `grow_disagreementHV_topM_kmedoids_OneTarget` | `grow_disagreementHV_topM_kmedoids_TwoTargets` |
 | TS-Dis. | `grow_TS_QBC_no_diversity_OneTarget` | `grow_TS_QBC_no_diversity_TwoTargets` |
 | DPP TS-Dis. | `grow_DPP_TS_QBC_OneTarget` | `grow_DPP_TS_QBC_TwoTargets` |
+| NSGA-II Dis. | — | `growing_EA_2obj_qbc_only` |
+| NSGA-II Dis. + diversity | `grow_EA_QBC_1Obj_withDiversity` | `grow_EA_QBC_2Obj_twoTargets_plusDiversity` |
 
 Random sampling uses the command-line identifier `random` with `target=all`.
 
@@ -28,10 +30,22 @@ The repository also provides the following variant, included in the Supplementar
 - **TS** stands for Thompson sampling.
 - **DPP** stands for determinantal point process.
 - **Dis.** denotes model disagreement.
-- Historical code identifiers retain `QBC` in the TS-Dis. and DPP TS-Dis. names.
+- **NSGA-II** stands for Non-dominated Sorting Genetic Algorithm II.
+- Historical code identifiers retain `QBC` in the TS-Dis., DPP TS-Dis., and NSGA-II names.
 - `OneTarget` and `TwoTargets` indicate the number of targeted material properties.
 - `grow2QBC` is the command-line identifier for QBC targeting two outcomes.
-- Command-line identifiers must match the dispatch conditions in `run_al.py`. Single-target QBC uses `QBC`, which calls the Python function `grow_QBC`. Random sampling uses `random`, which calls `grow_random`.
+- In the NSGA-II identifiers, `1Obj` and `2Obj` count the targeted disagreement objectives. The `withDiversity` and `plusDiversity` variants include an additional diversity objective.
+- Command-line identifiers must match the dispatch conditions in `run_al.py`. They are not always identical to the Python function names.
+
+The NSGA-II command-line identifiers call the following functions:
+
+| Command-line identifier | Python function |
+|---|---|
+| `growing_EA_2obj_qbc_only` | `grow_EA_QBC_2Obj_twoTargets_from3Outcomes` |
+| `grow_EA_QBC_1Obj_withDiversity` | `grow_EA_QBC_1Obj_withDiversity_from3Outcomes` |
+| `grow_EA_QBC_2Obj_twoTargets_plusDiversity` | `grow_EA_QBC_2Obj_twoTargets_plusDiversity_from3Outcomes` |
+
+Single-target QBC uses `QBC`, which calls `grow_QBC`. Random sampling uses `random`, which calls `grow_random`.
 
 ### Available datasets and targets
 
@@ -69,11 +83,14 @@ Activate the Python environment containing the required dependencies, then run t
 bash run_al.bash
 ```
 
-The provided script enables all 10 policies:
+The provided script enables all 13 policies:
 
 ```bash
 GROWING_CRITERIA=(
     QBC
+    grow_EA_QBC_1Obj_withDiversity
+    growing_EA_2obj_qbc_only
+    grow_EA_QBC_2Obj_twoTargets_plusDiversity
     grow_disagreementHV_topM_kmedoids_OneTarget
     grow_DPP_TS_QBC_OneTarget
     grow_TS_QBC_no_diversity_OneTarget
@@ -94,20 +111,22 @@ Each selected policy runs its full acquisition campaign without a time limit. Re
 al/<policy>/<dataset>/<target>/<seed>/
 ```
 
-Here, `<policy>` is the command-line identifier, such as `QBC`, `grow2QBC`, or `random`.
+Here, `<policy>` is the command-line identifier, such as `QBC`, `growing_EA_2obj_qbc_only`, or `random`.
 
 You can also select a policy directly through the Python command-line interface. For example:
 
 ```bash
 python run_al.py \
-    --growingCriteria grow_DPP_TS_QBC_TwoTargets \
+    --growingCriteria grow_EA_QBC_2Obj_twoTargets_plusDiversity \
     --dataset jarvis18 \
     --target bandgap_bulkmodulus \
-    --outputDir al/grow_DPP_TS_QBC_TwoTargets/jarvis18/bandgap_bulkmodulus/0 \
+    --outputDir al/grow_EA_QBC_2Obj_twoTargets_plusDiversity/jarvis18/bandgap_bulkmodulus/0 \
     --randomSeed 0
 ```
 
-This example runs DPP TS-Dis. targeting band gap and bulk modulus in JARVIS18.
+This example runs NSGA-II Dis. + diversity targeting band gap and bulk modulus in JARVIS18.
+
+The two-target NSGA-II policies require their identifiers to be included in the target-initialization condition in `run_al.py`, so that `target1` and `target2` are assigned before the policy function is called. This correction is included in the updated runner.
 
 To use all target combinations, set:
 
