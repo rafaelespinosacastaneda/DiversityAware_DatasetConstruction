@@ -1,3 +1,19 @@
+## DFT datasets
+
+The MP18, MP21, JARVIS18, and JARVIS22 featurized datasets used in this
+repository are available from the following Zenodo archive:
+
+Li, K., Persaud, D., Choudhary, K., DeCost, B., Greenwood, M., and
+Hattrick-Simpers, J. (2024). *Exploiting redundancy in large materials
+datasets for efficient machine learning with less data* (version v3).
+Zenodo. https://doi.org/10.5281/zenodo.12763938
+
+
+The code automatically downloads the required file if it is not already
+present in the data directory. The downloaded datasets undergo additional
+data curation in the preprocessing code before the active-learning experiments.
+
+
 ## Acquisition policies
 
 The repository includes the DFT acquisition policies listed below. The tables map the names used in the paper to the command-line identifiers accepted by `run_al.py`.
