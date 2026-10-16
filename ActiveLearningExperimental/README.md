@@ -44,11 +44,10 @@ source test/Scripts/activate
 
 The `ExperimentalDatasetConstruction` folder contains the code used to reproduce the experimental dataset construction experiments using the **sysTEm** dataset as the candidate pool.
 
-This folder contains three subfolders:
+This folder contains two subfolders:
 
 - `systemDataCuration`
 - `ActiveLearningDatasetConstruction`
-- `ResultsAnalysis`
 
 ---
 
