@@ -194,5 +194,5 @@ You can also select a policy directly through the Python command-line interface.
 This example runs NSGA-II Dis. + diversity targeting electrical conductivity and the Seebeck coefficient.
 
 
-To run all the policies modify the `run_al_thermo.bash` file to include every policy.
+To run all the policies modify the `run_al_thermo.bash` file to include every policy. Random seeds used in paper 0 1 2 3 4. 
 
