@@ -51,9 +51,3 @@ source test/Scripts/activate
 
 ---
 
-This folder contains two subfolders:
-
-- `systemDataCuration`
-- `ActiveLearningDatasetConstruction`
-
----
