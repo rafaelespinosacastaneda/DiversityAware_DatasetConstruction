@@ -1,6 +1,6 @@
 # DiversityAware_DatasetConstruction
-This repository contains the code needed to reproduce the results reported in the paper Diversity-Aware Active Learning Builds Materials Datasets for Current and Future Objectives
-
+This repository contains the code needed to reproduce the results reported in the paper Diversity-Aware Active Learning Builds Materials Datasets for Current and Future Objectives.
+The results can be downloaded also directly from the zenodo repository [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23424148.svg)](https://doi.org/10.5281/zenodo.23424148). 
 
 ---
 # Installation
