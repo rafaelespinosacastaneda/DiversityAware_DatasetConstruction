@@ -95,7 +95,7 @@ The file by default runs a single seed and single policy. This can be used as DE
 
 This Bash script sequentially runs all random seeds and dataset construction strategies by calling `run_all_thermo.py`.
 
-To run this script, open a terminal in the `ExperimentalDatasetConstruction` folder and execute:
+To run this script, open a terminal in the `ActiveLearningDatasetConstruction` folder and execute:
 
 ```bash
 bash run_al_thermo.bash
