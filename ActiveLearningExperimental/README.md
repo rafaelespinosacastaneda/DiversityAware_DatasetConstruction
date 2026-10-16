@@ -67,7 +67,7 @@ Before running the notebook, make sure that:
 The notebook outputs a curated CSV file named:
 
 ```text
-CLEANED_DATA.csv
+CLEANED_DATA_AND_FILTERED.csv
 ```
 
 This file is used as the candidate pool for the active-learning dataset construction experiments.
@@ -115,7 +115,7 @@ This is the main script for running one dataset construction experiment with one
 The script uses:
 
 ```text
-CLEANED_DATA.csv
+CLEANED_DATA_AND_FILTERED.csv
 ```
 
 as the candidate pool.
